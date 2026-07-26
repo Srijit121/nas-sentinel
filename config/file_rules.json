@@ -1,0 +1,47 @@
+{
+    "Camera Pics": [
+         ".jpg",
+         ".jpeg",
+         ".png",
+         ".heic",
+         ".gif"
+    ],   
+    "Videos": [
+        ".mov",
+        ".mp4",
+        ".mkv",
+        ".avi"
+    ],
+
+    "Documents": [
+        ".pdf",
+        ".doc",
+        ".docx",
+        ".txt"
+    ],
+
+    "Presentations": [
+        ".ppt",
+        ".pptx"
+    ],
+
+    "Spreadsheets": [
+        ".xls",
+        ".xlsx",
+        ".csv"
+    ],
+
+    "Archives": [
+        ".zip",
+        ".rar",
+        ".7z",
+        ".tar",
+        ".gz"
+    ],
+
+    "Music": [
+        ".mp3",
+        ".flac",
+        ".wav"
+    ]
+}

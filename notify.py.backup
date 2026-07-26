@@ -1,0 +1,95 @@
+import os
+import requests
+
+from dotenv import load_dotenv
+
+load_dotenv()
+
+
+class Notifier:
+
+    def __init__(self):
+
+        self.enabled = os.getenv("NTFY_ENABLED", "true").lower() == "true"
+
+        self.server = os.getenv(
+            "NTFY_SERVER",
+            "https://ntfy.sh",
+        )
+
+        self.topic = os.getenv("NTFY_TOPIC")
+
+        self.timeout = int(os.getenv("NTFY_TIMEOUT", 5))
+
+    def _send(
+        self,
+        title,
+        message,
+        priority="default",
+        tags=None,
+    ):
+
+        if not self.enabled:
+            return
+
+        if not self.topic:
+            return
+
+        headers = {
+            "Title": title,
+            "Priority": priority,
+        }
+
+        if tags:
+            headers["Tags"] = tags
+
+        try:
+
+            requests.post(
+                f"{self.server}/{self.topic}",
+                data=message.encode(),
+                headers=headers,
+                timeout=self.timeout,
+            )
+
+        except Exception:
+            pass
+
+    def success(self, message):
+
+        self._send(
+            "NAS Sentinel",
+            message,
+            priority="default",
+            tags="white_check_mark",
+        )
+
+    def warning(self, message):
+
+        self._send(
+            "NAS Sentinel Warning",
+            message,
+            priority="high",
+            tags="warning",
+        )
+
+    def error(self, message):
+
+        self._send(
+            "NAS Sentinel Error",
+            message,
+            priority="urgent",
+            tags="x",
+        )
+
+    def critical(self, message):
+
+        self._send(
+            "NAS Sentinel Critical",
+            message,
+            priority="urgent",
+            tags="rotating_light",
+        )
+
+
+notifier = Notifier()
